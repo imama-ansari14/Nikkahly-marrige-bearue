@@ -1,0 +1,24 @@
+# Nikkahly Setup Checklist
+
+- [ ] Create MongoDB Atlas account
+- [ ] Create Free cluster
+- [ ] Create database user
+- [ ] Add your IP to Network Access
+- [ ] Copy MongoDB connection string
+- [ ] Copy `server/.env.example` to `server/.env`
+- [ ] Add MONGODB_URI
+- [ ] Add a strong JWT_SECRET
+- [ ] Add your mum's admin email
+- [ ] Add your mum's admin password
+- [ ] Run `npm install`
+- [ ] Run `npm run dev`
+- [ ] Open http://localhost:5173
+- [ ] Sign in
+- [ ] Add a test Male profile
+- [ ] Add a test Female profile
+- [ ] Upload multiple photos
+- [ ] Test All/Male/Female filters
+- [ ] Test search
+- [ ] Test editing
+- [ ] Test deleting an image
+- [ ] Test deleting a client
