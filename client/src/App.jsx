@@ -398,6 +398,7 @@ function Clients() {
   );
 }
 
+// ClientForm component
 function ClientForm() {
   const { id } = useParams(),
     edit = !!id,
@@ -867,6 +868,7 @@ const InfoSection = ({ title, children }) => (
     <div className="grid gap-x-6 md:grid-cols-2">{children}</div>
   </section>
 );
+
 const Info = ({ l, v, full }) =>
   v === null || v === undefined || v === "" ? null : (
     <div
@@ -896,6 +898,8 @@ const Badge = ({ children }) => (
     {children}
   </span>
 );
+
+// Client card component
 function Card({ c }) {
   return (
     <Link
@@ -934,6 +938,8 @@ function Card({ c }) {
     </Link>
   );
 }
+
+// Client row component
 function Row({ c }) {
   return (
     <Link
@@ -953,6 +959,8 @@ function Row({ c }) {
     </Link>
   );
 }
+
+// Avatar component
 function Avatar({ c }) {
   return (
     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-wine-50 font-bold text-wine-800">
