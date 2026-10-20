@@ -25,7 +25,7 @@ const clientSchema = new mongoose.Schema(
     cast: String,
     height: String,
     weight: String,
-    complextion: String,
+    complexion: String,
     education: String,
     passingYear: Number,
     maritalStatus: String,
