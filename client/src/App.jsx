@@ -35,9 +35,11 @@ const initial = {
   gender: "",
   age: "",
   cast: "",
+  height: "",
+  weight: "",
+  complexion: "",
   education: "",
   passingYear: "",
-  height: "",
   maritalStatus: "",
   motherTongue: "",
   jobTitle: "",
@@ -472,58 +474,87 @@ function ClientForm() {
       {error && <Alert>{error}</Alert>}
       <form onSubmit={submit} className="space-y-5">
         <Section title="Client Details" icon={UserRound}>
+          {/* Name Field */}
           <Field
             label="Name"
             required
             v={form.name}
             set={(v) => set("name", v)}
           />
+
+          {/* Gender Field */}
           <Select
             label="Gender"
             v={form.gender}
             set={(v) => set("gender", v)}
             opts={["Male", "Female"]}
           />
+
+          {/* Age Field */}
           <Field
             label="Age"
             type="number"
             v={form.age}
             set={(v) => set("age", v)}
           />
+
+          {/* Cast Field */}
           <Field label="Cast" v={form.cast} set={(v) => set("cast", v)} />
-          <Field
-            label="Education"
-            v={form.education}
-            set={(v) => set("education", v)}
-          />
-          <Field
-            label="Passing Year"
-            type="number"
-            v={form.passingYear}
-            set={(v) => set("passingYear", v)}
-          />
+
+          {/* Height Field */}
           <Field label="Height" v={form.height} set={(v) => set("height", v)} />
+
+          {/* Weight Field */}
+
+          <Field label="Weight" v={form.weight} set={(v) => set("weight", v)} />
+
+          {/* Complexion Field */}
+          <Field
+            label="Complexion"
+            v={form.complexion}
+            set={(v) => set("complexion", v)}
+          />
+
+          {/* Marital Status Field */}
           <Select
             label="Marital Status"
             v={form.maritalStatus}
             set={(v) => set("maritalStatus", v)}
             opts={["Single", "Divorced", "Widowed", "Separated", "Other"]}
           />
+
+          {/* Education Field */}
+          <Field
+            label="Education"
+            v={form.education}
+            set={(v) => set("education", v)}
+          />
+          {/* Passing Year Field */}
+          <Field
+            label="Passing Year"
+            type="number"
+            v={form.passingYear}
+            set={(v) => set("passingYear", v)}
+          />
+          {/* Mother Tongue Field */}
           <Field
             label="Mother Tongue"
             v={form.motherTongue}
             set={(v) => set("motherTongue", v)}
           />
+          {/* Job Title Field */}
           <Field
             label="Job Title"
             v={form.jobTitle}
             set={(v) => set("jobTitle", v)}
           />
+          {/* Designation Field */}
           <Field
             label="Designation"
             v={form.designation}
             set={(v) => set("designation", v)}
           />
+          {/* Earning / Salary Field */}
           <Field
             label="Earning / Salary"
             v={form.earningSalary}
@@ -753,6 +784,8 @@ function ClientDetails() {
             <Info l="Education" v={c.education} />
             <Info l="Passing Year" v={c.passingYear} />
             <Info l="Height" v={c.height} />
+            <Info l="Weight" v={c.weight} />
+            <Info l="Complexion" v={c.complexion} />
             <Info l="Marital Status" v={c.maritalStatus} />
             <Info l="Mother Tongue" v={c.motherTongue} />
             <Info l="Job Title" v={c.jobTitle} />
