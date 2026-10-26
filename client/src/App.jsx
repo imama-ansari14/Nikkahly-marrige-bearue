@@ -706,7 +706,7 @@ async function handlePhotoChange(e) {
                 type="file"
                 accept="image/*"
                 multiple
-                onChange={(e) => setPhotos(Array.from(e.target.files || []))}
+                onChange={handlePhotoChange}
               />
             </label>
           </div>
