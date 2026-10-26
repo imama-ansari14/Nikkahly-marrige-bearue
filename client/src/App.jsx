@@ -28,6 +28,7 @@ import {
   X,
 } from "lucide-react";
 import Logo from "../../public/nikkahly-logo.png";
+import imageCompression from "browser-image-compression";
 import { api, imageUrl } from "./api";
 
 const initial = {
