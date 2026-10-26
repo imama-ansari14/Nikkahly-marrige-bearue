@@ -422,6 +422,49 @@ function ClientForm() {
       .finally(() => setBusy(false));
   }, [id]);
   const set = (k, v) => setForm((p) => ({ ...p, [k]: v }));
+  
+async function handlePhotoChange(e) {
+  const selected = Array.from(e.target.files || []);
+  if (!selected.length) return;
+
+  setError("");
+  setBusy(true);
+
+  try {
+    const options = {
+      maxSizeMB: 0.25,
+      maxWidthOrHeight: 1400,
+      useWebWorker: true,
+      initialQuality: 0.8,
+      fileType: "image/jpeg",
+    };
+
+    const compressedPhotos = await Promise.all(
+      selected.map(async (file) => {
+        if (!file.type.startsWith("image/")) {
+          throw new Error("Please select image files only.");
+        }
+
+        const compressed = await imageCompression(file, options);
+        const filename =
+          file.name.replace(/\.[^.]+$/, "") || "client-photo";
+
+        return new File([compressed], `${filename}.jpg`, {
+          type: "image/jpeg",
+          lastModified: Date.now(),
+        });
+      })
+    );
+
+    setPhotos(compressedPhotos);
+  } catch (err) {
+    setError(err.message || "Unable to compress the selected photos.");
+  } finally {
+    setBusy(false);
+    e.target.value = "";
+  }
+}
+
   async function submit(e) {
     e.preventDefault();
     setBusy(true);
