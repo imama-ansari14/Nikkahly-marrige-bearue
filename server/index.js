@@ -17,6 +17,45 @@ app.use(express.json({ limit: "2mb" }));
 
 let bucket;
 
+let connectPromise;
+
+async function ensureDatabase(req, res, next) {
+  try {
+    if (mongoose.connection.readyState !== 1) {
+      if (!process.env.MONGODB_URI) {
+        throw new Error("MONGODB_URI is missing.");
+      }
+
+      if (!connectPromise) {
+        connectPromise = mongoose
+          .connect(process.env.MONGODB_URI)
+          .then(() => {
+            bucket = new GridFSBucket(mongoose.connection.db, {
+              bucketName: "clientImages",
+            });
+          })
+          .catch((err) => {
+            connectPromise = null;
+            throw err;
+          });
+      }
+
+      await connectPromise;
+    }
+
+    if (!bucket) {
+      bucket = new GridFSBucket(mongoose.connection.db, {
+        bucketName: "clientImages",
+      });
+    }
+
+    next();
+  } catch (err) {
+    console.error("Database connection failed:", err.message);
+    res.status(500).json({ message: "Database connection failed." });
+  }
+}
+
 const clientSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
@@ -73,6 +112,8 @@ function auth(req, res, next) {
 }
 
 app.get("/api/health", (_req, res) => res.json({ ok: true }));
+app.use("/api/clients", ensureDatabase);
+app.use("/api/images", ensureDatabase);
 
 app.post("/api/auth/login", (req, res) => {
   const { email, password } = req.body;
@@ -249,17 +290,20 @@ app.get("/api/images/:id", auth, async (req, res) => {
   }
 });
 
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    bucket = new GridFSBucket(mongoose.connection.db, {
-      bucketName: "clientImages",
-    });
-    app.listen(PORT, () =>
-      console.log(`Nikkahly API running on http://localhost:${PORT}`),
-    );
-  })
-  .catch((err) => {
-    console.error("MongoDB connection failed:", err.message);
-    process.exit(1);
-  });
+
+export default app;
+
+// mongoose
+//   .connect(process.env.MONGODB_URI)
+//   .then(() => {
+//     bucket = new GridFSBucket(mongoose.connection.db, {
+//       bucketName: "clientImages",
+//     });
+//     app.listen(PORT, () =>
+//       console.log(`Nikkahly API running on http://localhost:${PORT}`),
+//     );
+//   })
+//   .catch((err) => {
+//     console.error("MongoDB connection failed:", err.message);
+//     process.exit(1);
+//   });
