@@ -290,20 +290,11 @@ app.get("/api/images/:id", auth, async (req, res) => {
   }
 });
 
+// Start Express locally
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Nikkahly API running at http://localhost:${PORT}`);
+  });
+}
 
 export default app;
-
-// mongoose
-//   .connect(process.env.MONGODB_URI)
-//   .then(() => {
-//     bucket = new GridFSBucket(mongoose.connection.db, {
-//       bucketName: "clientImages",
-//     });
-//     app.listen(PORT, () =>
-//       console.log(`Nikkahly API running on http://localhost:${PORT}`),
-//     );
-//   })
-//   .catch((err) => {
-//     console.error("MongoDB connection failed:", err.message);
-//     process.exit(1);
-//   });
